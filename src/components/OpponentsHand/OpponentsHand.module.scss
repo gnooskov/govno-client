@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.playerName {
+  margin-bottom: 10px;
+}
+
+.hand {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.swap {
+  &:not(:empty) {
+    margin-right: 30px;
+  }
+}
+
+.cards {
+  display: flex;
+  flex-direction: row-reverse;
+  & > :not(:last-child) {
+    margin-left: -40px;
+  }
+}
+
+.swappedCard {
+  visibility: hidden;
+}

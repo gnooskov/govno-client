@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.hand {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.card {
+  transform-origin: 50% 100%;
+  cursor: pointer;
+  &:not(:first-child) {
+    margin-left: -70px;
+  }
+}
+
+.cardSelected {
+  margin-top: -40px;
+}
+
+.swapAvailable {
+  &:hover {
+    box-shadow: 0 0 20px rgba(240, 210, 40, 0.8);
+  }
+}
+
+.swapped {
+  visibility: hidden;
+}
+
+.swap {
+  &:not(:empty) {
+    margin-left: 50px;
+  }
+}

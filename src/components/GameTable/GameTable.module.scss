@@ -1,0 +1,35 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.otherPlayers {
+  display: flex;
+  flex-direction: column;
+}
+
+.govnoButton {
+  margin-top: 20px;
+}
+
+.currentPlayer {
+  display: flex;
+  flex-direction: column;
+}
+
+.currentDash {
+  display: flex;
+}
+
+.currentPlayerScore {
+  margin-right: 20px;
+}
+
+.otherDash {
+  display: flex;
+}
+
+.otherScore {
+  align-self: flex-end;
+}
