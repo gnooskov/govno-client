@@ -5,6 +5,8 @@ import { observer } from 'mobx-react-lite';
 
 import { gameStore } from '../../index.js';
 
+import styles from './GameLobby.module.scss';
+
 export const GameLobby = observer(() => {
   const { gameId } = useParams();
   const { clientId, currentGame, redirectToHome, rules } = gameStore;
@@ -39,13 +41,13 @@ export const GameLobby = observer(() => {
 
   const playersList = currentGame
     ? (
-      <div>
-        <h3>Players:</h3>
+      <div className={styles.players}>
+        <h3>Игроки</h3>
         {playerIds.map(playerId => {
           const isYou = playerId === clientId;
           const playerLabel = isYou ? 'You' : playerId;
 
-          return (<div key={playerId}>{playerLabel}</div>)
+          return <div className={styles.player} key={playerId}>{playerLabel}</div>;
         })}
       </div>
     )
@@ -60,7 +62,7 @@ export const GameLobby = observer(() => {
         <button onClick={() => {
           gameStore.leaveGame(currentGame.id);
         }}>
-          Leave game
+          Покинуть игру
         </button>
       );
     } else {
@@ -68,31 +70,45 @@ export const GameLobby = observer(() => {
         <button onClick={() => {
           gameStore.joinGame(currentGame.id);
         }}>
-          Join this game
+          Присоединиться
         </button>
       );
     }
   }
 
+  const { minPlayers, maxPlayers } = rules;
+
   let startButton;
-  if (playerIds.length >= rules.minPlayers) {
+  if (playerIds.length >= minPlayers) {
     startButton = (
       <button onClick={() => {
         gameStore.startGame(currentGame.id)
-      }}>start game</button>
+      }}>Начать игру</button>
     )
   }
 
   return (
     <div>
-      <h1>lobby</h1>
+      <h1>Собираемся играть</h1>
       {playersList}
-      {joinGameButton}
-      {leaveGameButton}
-      {startButton}
-      <div>
+      <div className={styles.rulesBlock}>
+        <div>
+          Минимальное число игроков для начала: {minPlayers}
+        </div>
+        <div>
+          Максимальное число игроков: {maxPlayers}
+        </div>
+      </div>
+      <div className={styles.mainButtons}>
+        {joinGameButton}
+        {leaveGameButton}
+        {startButton}
+      </div>
+      <div className={styles.backWrapper}>
         <Link to='/'>
-          Back to games list
+          <button>
+            Назад к списку игр
+          </button>
         </Link>
       </div>
     </div>

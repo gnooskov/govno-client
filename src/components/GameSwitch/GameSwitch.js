@@ -5,7 +5,8 @@ import { useParams } from "react-router";
 import { gameStore } from "../..";
 import { GameLobby } from "../GameLobby/GameLobby";
 import { GameTable } from "../GameTable/GameTable";
-import { Link } from "react-router-dom";
+import { GameOver } from "../GameOver/GameOver";
+import { Loader } from "../Loader/Loader";
 
 export const GameSwitch = observer(() => {
   const { gameId } = useParams();
@@ -19,18 +20,11 @@ export const GameSwitch = observer(() => {
   }, []);
 
   if (!currentGame) {
-    return <div>Loading game data...</div>;
+    return <Loader label='Загрузка игрового говна...' />;
   }
 
   if (currentGame.ended) {
-    return (
-      <div>
-        <h1>Game has ended!</h1>
-        <Link to='/'>
-          Go to games list
-        </Link>
-      </div>
-    )
+    return <GameOver />;
   }
 
   if (currentGame.started) {

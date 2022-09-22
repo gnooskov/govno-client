@@ -1,0 +1,23 @@
+.list {
+
+}
+
+.gameLine {
+  a {
+    padding: 8px 16px;
+    background-color: #efefef;
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+    &:hover {
+      background-color: #ddd;
+    }
+    &:not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+}
+
+.create {
+  margin-top: 20px;
+}

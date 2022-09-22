@@ -5,6 +5,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { gameStore } from '../../index.js';
 
 import styles from './GamesList.module.scss';
+import { Loader } from '../Loader/Loader.jsx';
 
 export const GamesList = observer(() => {
   const { ws, gamesFetching, games, redirectToLobby } = gameStore;
@@ -31,41 +32,40 @@ export const GamesList = observer(() => {
   }
 
   if (!ws) {
-    return (
-      <div>
-        Connecting to websocket...
-      </div>
-    );
+    return <Loader label='Подключение к сетевой розетке...' />;
   }
 
   let gamesNodes;
   if (gamesFetching) {
-    gamesNodes = <span>Loading games...</span>;
+    gamesNodes = <Loader label='Загрузка списка игр...' />;
   } else {
     gamesNodes = games?.length
       ? games.map((game) => {
         const { id, playerIds, ended } = game;
         const imIn = playerIds.includes(gameStore.clientId);
-        const imInLabel = imIn ? ` (i participate)` : '';
+        const imInLabel = imIn ? ` (я участвую)` : '';
 
         if (ended) {
           return (
-            <div key={id}>
-              {id} (ended)
+            <div className={styles.gameLine} key={id}>
+              {id} (закончена)
             </div>
           )
         }
 
         return (
-          <div key={id}>
+          <div className={styles.gameLine} key={id}>
             <Link to={`/game/${id}`}>
-              {id}{imInLabel}
+              {id}
             </Link>
+            {imInLabel}
           </div>
         );
       })
       : (
-        <div>no games</div>
+        <div className={styles.noGames}>
+          Игр нет
+        </div>
       );
   }
 
@@ -75,12 +75,12 @@ export const GamesList = observer(() => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Games list</h1>
+      <h1>Список игр</h1>
       <div className={styles.list}>
         {gamesNodes}
       </div>
-      <button onClick={createGame}>
-        create game
+      <button className={styles.create} onClick={createGame}>
+        Создать игру
       </button>
     </div>
   )

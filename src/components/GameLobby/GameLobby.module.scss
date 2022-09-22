@@ -1,0 +1,28 @@
+.players {
+  display: flex;
+  flex-direction: column;
+}
+
+.player {
+  &::before {
+    content: '🧑';
+    margin-right: 5px;
+  }
+  &:not(:first-child) {
+    margin-top: 5px;
+  }
+}
+
+.rulesBlock {
+  margin-top: 20px;
+}
+
+.mainButtons {
+  display: flex;
+  gap: 0 20px;
+  margin-top: 40px;
+}
+
+.backWrapper {
+  margin-top: 20px;
+}

@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0 20px;
+}
+
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: -5px;
+  width: 40px;
+  height: 40px;
+  // box-shadow: inset 0 8px 5px -5px rgb(115, 85, 30);
+  border-radius: 50%;
+  font-size: 40px;
+  line-height: 40px;
+  animation: spinning 1s linear infinite;
+  transform-origin: 50% 60%;
+}
+
+.label {
+
+}
+
+@keyframes spinning {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+}
