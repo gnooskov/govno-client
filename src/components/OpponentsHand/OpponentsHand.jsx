@@ -8,7 +8,6 @@ import styles from './OpponentsHand.module.scss';
 
 export const OpponentsHand = ({
   swap,
-  id,
   nickname,
   className,
 }) => {
@@ -37,7 +36,7 @@ export const OpponentsHand = ({
   return (
     <div className={cn(styles.wrapper, className)}>
       <div className={styles.playerName}>
-        {id}
+        {nickname}
       </div>
       <div className={styles.hand}>
         <div className={styles.swap}>

@@ -16,7 +16,6 @@ export class GameStore {
   
   redirectToLobby = null;
   redirectToHome = null;
-  redirectToGame = null;
 
   constructor() {
     makeObservable(this, {
@@ -29,7 +28,6 @@ export class GameStore {
       currentGame: observable,
       redirectToLobby: observable,
       redirectToHome: observable,
-      redirectToGame: observable,
       rules: observable,
       nickname: observable,
     });
@@ -171,10 +169,6 @@ export class GameStore {
 
   setRedirectToHome(state) {
     this.redirectToHome = state;
-  }
-
-  setRedirectToGame(gameNameEng) {
-    this.redirectToGame = gameNameEng;
   }
 
   setRules(rules) {
