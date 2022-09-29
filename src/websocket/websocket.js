@@ -10,12 +10,16 @@ export const wsParser = (data, gameStore) => {
   }
 
   if (type === 'clientId') {
-    gameStore.setClientId(payload);
+    const { id, nickname } = payload;
+    gameStore.setClientId(id);
+    if (!gameStore.nickname) {
+      gameStore.setNickname(nickname);
+    }
   }
 
   if (type === 'gameCreated') {
     gameStore.setCurrentGame(payload);
-    gameStore.setRedirectToLobby(payload.id);
+    gameStore.setRedirectToLobby(payload.nameEng);
   }
 
   if (type === 'gameDetails') {
@@ -34,6 +38,10 @@ export const wsParser = (data, gameStore) => {
 
   if (type === 'gameState') {
     gameStore.setGameState(payload);
+  }
+
+  if (type === 'nicknameChanged') {
+    gameStore.setNickname(payload);
   }
 }
 

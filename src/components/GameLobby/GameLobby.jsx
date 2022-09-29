@@ -8,13 +8,13 @@ import { gameStore } from '../../index.js';
 import styles from './GameLobby.module.scss';
 
 export const GameLobby = observer(() => {
-  const { gameId } = useParams();
-  const { clientId, currentGame, redirectToHome, rules } = gameStore;
-  const playerIds = currentGame?.playerIds || null
-  const gameStarted = currentGame?.started || false
+  const { gameNameEng } = useParams();
+  const { currentGame, redirectToHome, rules } = gameStore;
+
+  const gameStarted = currentGame?.started || false;
 
   useEffect(() => {
-    gameStore.getLobbyDetails(gameId);
+    gameStore.getLobbyDetails(gameNameEng);
     gameStore.setRedirectToLobby(null);
 
     return () => {
@@ -35,19 +35,22 @@ export const GameLobby = observer(() => {
     return <div>Loading game info...</div>;
   }
 
-  const imIn = currentGame
-    ? playerIds?.includes(gameStore.clientId) || false
-    : false;
+  const { iParticipate, playerNicknames, myPlayerIndex } = currentGame;
 
   const playersList = currentGame
     ? (
       <div className={styles.players}>
         <h3>Игроки</h3>
-        {playerIds.map(playerId => {
-          const isYou = playerId === clientId;
-          const playerLabel = isYou ? 'You' : playerId;
+        {playerNicknames.map((playerNickname, index) => {
+          const isYouLabel = index === myPlayerIndex
+            ? ' (Ты)'
+            : '';
 
-          return <div className={styles.player} key={playerId}>{playerLabel}</div>;
+          return (
+            <div className={styles.player} key={playerNickname}>
+              {playerNickname}{isYouLabel}
+            </div>
+          );
         })}
       </div>
     )
@@ -57,7 +60,7 @@ export const GameLobby = observer(() => {
   let leaveGameButton;
 
   if (currentGame) {
-    if (imIn) {
+    if (iParticipate) {
       leaveGameButton = (
         <button onClick={() => {
           gameStore.leaveGame(currentGame.id);
@@ -79,7 +82,7 @@ export const GameLobby = observer(() => {
   const { minPlayers, maxPlayers } = rules;
 
   let startButton;
-  if (playerIds.length >= minPlayers) {
+  if (playerNicknames.length >= minPlayers) {
     startButton = (
       <button onClick={() => {
         gameStore.startGame(currentGame.id)

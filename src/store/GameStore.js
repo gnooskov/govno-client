@@ -3,6 +3,7 @@ import { makeObservable, observable } from 'mobx';
 export class GameStore {
   ws = null;
   clientId = localStorage.getItem('clientId');
+  nickname = localStorage.getItem('nickname');
 
   requestsQueue = [];
   rules = null;
@@ -30,6 +31,7 @@ export class GameStore {
       redirectToHome: observable,
       redirectToGame: observable,
       rules: observable,
+      nickname: observable,
     });
   }
 
@@ -107,6 +109,11 @@ export class GameStore {
     localStorage.setItem('clientId', clientId);
   }
 
+  setNickname(nickname) {
+    this.nickname = nickname;
+    localStorage.setItem('nickname', nickname);
+  }
+
   reportMyClientId() {
     if (!this.clientId) {
       return;
@@ -118,10 +125,21 @@ export class GameStore {
     });
   }
 
-  getLobbyDetails(gameId) {
+  reportMyNickname() {
+    if (!this.nickname) {
+      return;
+    }
+
+    this.wsSend({
+      type: 'myNickname',
+      payload: this.nickname,
+    })
+  }
+
+  getLobbyDetails(gameIdOrUrl) {
     this.wsSend({
       type: 'getLobbyDetails',
-      payload: gameId,
+      payload: gameIdOrUrl,
     });
   }
 
@@ -206,5 +224,15 @@ export class GameStore {
         gameId: this.currentGame.id,
       }
     })
+  }
+
+  reportNewNickname(newNickname) {
+    if (!newNickname) {
+      return;
+    }
+    this.wsSend(({
+      type: 'newNickname',
+      payload: newNickname,
+    }));
   }
 }

@@ -9,12 +9,12 @@ import { GameOver } from "../GameOver/GameOver";
 import { Loader } from "../Loader/Loader";
 
 export const GameSwitch = observer(() => {
-  const { gameId } = useParams();
+  const { gameNameEng } = useParams();
   const { currentGame } = gameStore;
 
   useEffect(() => {
     if (!currentGame) {
-      gameStore.getLobbyDetails(gameId);
+      gameStore.getLobbyDetails(gameNameEng);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

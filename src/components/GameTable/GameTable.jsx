@@ -9,6 +9,7 @@ import { OpponentsHand } from '../OpponentsHand/OpponentsHand';
 import styles from './GameTable.module.scss';
 import { GovnoButton } from '../GovnoButton/GovnoButton';
 import { ScoreBar } from '../ScoreBar/ScoreBar';
+import { Loader } from '../Loader/Loader';
 
 export const GameTable = observer(() => {
   const { clientId } = gameStore;
@@ -18,9 +19,7 @@ export const GameTable = observer(() => {
   let tableNode;
   if (!gameState) {
     gameStore.requestGameState(gameId);
-    tableNode = (
-      <span>Loading...</span>
-    )
+    tableNode = <Loader label='Наполняем игру говном...' />;
   } else {
     const { swaps, playerIds, scores } = gameState;
     const currentPlayerScore = scores[clientId];
@@ -74,7 +73,6 @@ export const GameTable = observer(() => {
 
   return (
     <>
-      <h1>Game</h1>
       {tableNode}
     </>
   )

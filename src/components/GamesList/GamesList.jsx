@@ -39,34 +39,34 @@ export const GamesList = observer(() => {
   if (gamesFetching) {
     gamesNodes = <Loader label='Загрузка списка игр...' />;
   } else {
-    gamesNodes = games?.length
-      ? games.map((game) => {
-        const { id, playerIds, ended } = game;
-        const imIn = playerIds.includes(gameStore.clientId);
-        const imInLabel = imIn ? ` (я участвую)` : '';
+    gamesNodes = games?.reduce((acc, game) => {
+      const { id, name, nameEng, iParticipate, ended } = game;
 
-        if (ended) {
-          return (
-            <div className={styles.gameLine} key={id}>
-              {id} (закончена)
-            </div>
-          )
-        }
+      if (ended) {
+        return acc;
+      }
 
-        return (
-          <div className={styles.gameLine} key={id}>
-            <Link to={`/game/${id}`}>
-              {id}
-            </Link>
-            {imInLabel}
-          </div>
-        );
-      })
-      : (
+      const imInLabel = iParticipate ? ` (я участвую)` : '';
+
+      acc.push(
+        <div className={styles.gameLine} key={id}>
+          <Link to={`/game/${nameEng}`}>
+            {name}
+          </Link>
+          {imInLabel}
+        </div>
+      );
+
+      return acc;
+    }, []) || []
+    
+    if (!gamesNodes.length) {
+      gamesNodes = (
         <div className={styles.noGames}>
           Игр нет
         </div>
       );
+    }
   }
 
   const createGame = () => {
