@@ -136,10 +136,10 @@ export class GameStore {
     })
   }
 
-  getLobbyDetails(gameIdOrUrl) {
+  getLobbyDetails(gameNameEng) {
     this.wsSend({
       type: 'getLobbyDetails',
-      payload: gameIdOrUrl,
+      payload: gameNameEng,
     });
   }
 
@@ -151,67 +151,67 @@ export class GameStore {
     this.currentGame = null;
   }
 
-  joinGame(gameId) {
+  joinGame(gameNameEng) {
     this.wsSend({
       type: 'join',
-      payload: gameId,
+      payload: gameNameEng,
     })
   }
 
-  leaveGame(gameId) {
+  leaveGame(gameNameEng) {
     this.wsSend({
       type: 'leave',
-      payload: gameId,
+      payload: gameNameEng,
     })
   }
 
-  setRedirectToLobby(gameId) {
-    this.redirectToLobby = gameId;
+  setRedirectToLobby(gameNameEng) {
+    this.redirectToLobby = gameNameEng;
   }
 
   setRedirectToHome(state) {
     this.redirectToHome = state;
   }
 
-  setRedirectToGame(gameId) {
-    this.redirectToGame = gameId;
+  setRedirectToGame(gameNameEng) {
+    this.redirectToGame = gameNameEng;
   }
 
   setRules(rules) {
     this.rules = rules;
   }
 
-  startGame(gameId) {
+  startGame(gameNameEng) {
     this.wsSend({
       type: 'start',
-      payload: gameId,
+      payload: gameNameEng,
     });
   }
 
-  requestGameState(gameId) {
+  requestGameState(gameNameEng) {
     this.wsSend({
       type: 'getGameState',
-      payload: gameId,
+      payload: gameNameEng,
     });
   }
 
   setGameState(game) {
     this.currentGame = game;
-    this.gameStates[game.id] = game;
+    this.gameStates[game.nameEng] = game;
   }
 
   currentGameState() {
     if (!this.currentGame) {
       return
     }
-    return this.gameStates?.[this.currentGame.id];
+    return this.gameStates?.[this.currentGame.nameEng];
   }
 
   submitSwap(index) {
     this.wsSend({
       type: 'swapCard',
       payload: {
-        gameId: this.currentGame.id,
+        gameNameEng: this.currentGame.nameEng,
         swap: index,
       }
     });
@@ -221,7 +221,7 @@ export class GameStore {
     this.wsSend({
       type: 'reportComplete',
       payload: {
-        gameId: this.currentGame.id,
+        gameNameEng: this.currentGame.nameEng,
       }
     })
   }

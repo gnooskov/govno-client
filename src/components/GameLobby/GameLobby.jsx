@@ -35,7 +35,7 @@ export const GameLobby = observer(() => {
     return <div>Loading game info...</div>;
   }
 
-  const { iParticipate, playerNicknames, myPlayerIndex } = currentGame;
+  const { iParticipate, nameEng, playerNicknames, myPlayerIndex } = currentGame;
 
   const playersList = currentGame
     ? (
@@ -63,7 +63,7 @@ export const GameLobby = observer(() => {
     if (iParticipate) {
       leaveGameButton = (
         <button onClick={() => {
-          gameStore.leaveGame(currentGame.id);
+          gameStore.leaveGame(nameEng);
         }}>
           Покинуть игру
         </button>
@@ -71,7 +71,7 @@ export const GameLobby = observer(() => {
     } else {
       joinGameButton = (
         <button onClick={() => {
-          gameStore.joinGame(currentGame.id);
+          gameStore.joinGame(nameEng);
         }}>
           Присоединиться
         </button>
@@ -85,7 +85,7 @@ export const GameLobby = observer(() => {
   if (playerNicknames.length >= minPlayers) {
     startButton = (
       <button onClick={() => {
-        gameStore.startGame(currentGame.id)
+        gameStore.startGame(nameEng)
       }}>Начать игру</button>
     )
   }

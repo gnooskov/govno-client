@@ -13,12 +13,12 @@ import { Loader } from '../Loader/Loader';
 
 export const GameTable = observer(() => {
   const { clientId } = gameStore;
-  const { gameId } = useParams();
+  const { gameNameEng } = useParams();
   const gameState = gameStore.currentGameState();
 
   let tableNode;
   if (!gameState) {
-    gameStore.requestGameState(gameId);
+    gameStore.requestGameState(gameNameEng);
     tableNode = <Loader label='Наполняем игру говном...' />;
   } else {
     const { swaps, playerIds, scores } = gameState;
